@@ -5,11 +5,14 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     Rigidbody rb;
+    Material mat;
+    public GameManager gameManager;
     public float forceMult = 5f;
     // Start is called before the first frame update
     void Start()
     {
         forceMult += Time.timeSinceLevelLoad / 20f;
+        mat = gameObject.GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -24,5 +27,13 @@ public class Block : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+       if(collision.gameObject.name == "Player")
+       {
+            mat.SetColor("_Color", Color.red);
+       }
     }
 }
